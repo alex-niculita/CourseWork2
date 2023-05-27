@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class JavaQuestionServiceTest {
+class MathQuestionServiceTest {
 
     Set<Question> testSet;
 
@@ -25,11 +25,11 @@ class JavaQuestionServiceTest {
     private QuestionRepository questionRepository;
 
     @InjectMocks
-    private JavaQuestionService out;
+    private MathQuestionService out;
 
     @BeforeEach
     public void setup(){
-        out = new JavaQuestionService(questionRepository);
+        out = new MathQuestionService(questionRepository);
 
         testSet = new HashSet<>();
 

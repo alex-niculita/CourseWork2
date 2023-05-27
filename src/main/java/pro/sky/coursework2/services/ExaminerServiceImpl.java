@@ -1,36 +1,42 @@
 package pro.sky.coursework2.services;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pro.sky.coursework2.Question;
 import pro.sky.coursework2.exceptions.AmountOutOfSizeException;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
     private final Set<Question> randomQuestions = new HashSet<>();
 
-    private final QuestionService questionService;
+    private final QuestionService javaQuestionService;
+    private final QuestionService mathQuestionService;
 
-    public ExaminerServiceImpl(QuestionService questionService) {
-        this.questionService = questionService;
+    public ExaminerServiceImpl(QuestionService javaQuestionService, @Qualifier("mathQuestionService") QuestionService mathQuestionService) {
+        this.javaQuestionService = javaQuestionService;
+        this.mathQuestionService = mathQuestionService;
     }
 
     @Override
     public Collection<Question> getQuestions(int amount) {
-        int size = questionService.getAll().size();
+        int size = javaQuestionService.getAll().size() + mathQuestionService.getAll().size();
         if (amount > size || amount < 1) throw new AmountOutOfSizeException();
+        Collection<Question> allQuestions = new HashSet<>();
+        allQuestions.addAll(javaQuestionService.getAll());
+        allQuestions.addAll(mathQuestionService.getAll());
+        if (amount == size) return allQuestions;
 
-        if (amount == size) return questionService.getAll();
-
+        Random random = new Random();
         while (randomQuestions.size() < amount){
-            randomQuestions.add(questionService.getRandomQuestion());
+            if (random.nextBoolean()) {
+                randomQuestions.add(javaQuestionService.getRandomQuestion());
+            } else {
+                randomQuestions.add(mathQuestionService.getRandomQuestion());
+            }
         }
-
         return Collections.unmodifiableSet(randomQuestions);
     }
 }
