@@ -11,6 +11,8 @@ import java.util.*;
 @Primary
 public class JavaQuestionService implements QuestionService {
 
+    private Random random = new Random();
+
     private final QuestionRepository javaQuestionRepository;
 
     public JavaQuestionService(QuestionRepository javaQuestionRepository) {
@@ -41,7 +43,6 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public Question getRandomQuestion() {
         Question[] arrTemp = javaQuestionRepository.getAll().toArray(new Question[0]);
-        Random random = new Random();
         return arrTemp[random.nextInt(arrTemp.length)];
     }
 }

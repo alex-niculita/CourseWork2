@@ -9,6 +9,7 @@ import java.util.*;
 
 @Component("mathQuestionService")
 public class MathQuestionService implements QuestionService {
+    private Random random = new Random();
     private final QuestionRepository mathQuestionRepository;
 
     public MathQuestionService(@Qualifier("mathQuestionRepository") QuestionRepository mathQuestionRepository) {
@@ -39,7 +40,6 @@ public class MathQuestionService implements QuestionService {
     @Override
     public Question getRandomQuestion() {
         Question[] arrTemp = mathQuestionRepository.getAll().toArray(new Question[0]);
-        Random random = new Random();
         return arrTemp[random.nextInt(arrTemp.length)];
     }
 

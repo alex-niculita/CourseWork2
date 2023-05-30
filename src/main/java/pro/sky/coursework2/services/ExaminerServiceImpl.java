@@ -10,8 +10,6 @@ import java.util.*;
 @Service
 public class ExaminerServiceImpl implements ExaminerService {
 
-    private final Set<Question> randomQuestions = new HashSet<>();
-
     private final QuestionService javaQuestionService;
     private final QuestionService mathQuestionService;
 
@@ -22,6 +20,9 @@ public class ExaminerServiceImpl implements ExaminerService {
 
     @Override
     public Collection<Question> getQuestions(int amount) {
+
+        Set<Question> randomQuestions = new HashSet<>();
+
         int size = javaQuestionService.getAll().size() + mathQuestionService.getAll().size();
         if (amount > size || amount < 1) throw new AmountOutOfSizeException();
         Collection<Question> allQuestions = new HashSet<>();
