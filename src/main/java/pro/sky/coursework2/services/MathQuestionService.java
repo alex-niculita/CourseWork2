@@ -41,18 +41,16 @@ public class MathQuestionService implements QuestionService {
         String answerStr = null;
 
         //рандомные числа, для примера от -100 до 100
-        int a = random.nextInt(101) * (random .nextBoolean() ? -1 : 1);
-        int b = random.nextInt(101) * (random .nextBoolean() ? -1 : 1);
+        int a = random.nextInt(201) - 100;
+        int b = random.nextInt(201) - 100;
 
         questionStr.append(a).append(" ");
 
         // рандомная математическая операция, 0 плюс, 1 минус, 2 умножение, 3 деление
         int operation = random.nextInt(4);
         //проверяем если операция деление то генерируем второе число отличное от нуля
-        if (operation == 3){
-            while (b == 0) {
-                b = random.nextInt(100) * (random .nextBoolean() ? -1 : 1);
-            }
+        if (operation == 3 && b == 0){
+            b++;
         }
         switch (operation){
             case 0 -> {
